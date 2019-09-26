@@ -34,7 +34,7 @@ jobs:
 
             docker build -t $DOCKER_IMAGE:$KUBECTL_VERSION-alpine \
               --build-arg KUBECTL_VERSION=$KUBECTL_VERSION \
-              --build-arg KUSTOMIZE_VERISON=$KUSTOMIZE_VERSION \
+              --build-arg KUSTOMIZE_VERSION=$KUSTOMIZE_VERSION \
               --build-arg SKAFFOLD_VERSION=$SKAFFOLD_VERSION \
               -f Dockerfile.alpine .
 
@@ -78,7 +78,7 @@ jobs:
 
             docker build -t $DOCKER_IMAGE:$KUBECTL_VERSION-debian \
               --build-arg KUBECTL_VERSION=$KUBECTL_VERSION \
-              --build-arg KUSTOMIZE_VERISON=$KUSTOMIZE_VERSION \
+              --build-arg KUSTOMIZE_VERSION=$KUSTOMIZE_VERSION \
               --build-arg SKAFFOLD_VERSION=$SKAFFOLD_VERSION \
               -f Dockerfile.debian .
 
