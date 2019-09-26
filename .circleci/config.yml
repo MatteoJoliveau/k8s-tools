@@ -57,9 +57,9 @@ jobs:
       - run:
           name: Fetch kubectl stable version
           command: |
-          apk update
-          apk add curl
-          export KUBECTL_VERSION=$(curl $KUBECTL_VERSION_URL | sed 's/v//')
+            apk update
+            apk add curl
+            export KUBECTL_VERSION=$(curl $KUBECTL_VERSION_URL | sed 's/v//')
 
       - run:
           name: Login with Docker Hub
