@@ -37,7 +37,7 @@ jobs:
             docker push $DOCKER_IMAGE:$KUBECTL_VERSION-alpine
             docker push $DOCKER_IMAGE:alpine
             docker push $DOCKER_IMAGE:latest
-  alpine:
+  debian:
     docker:
       - image: docker:stable
         environment:
