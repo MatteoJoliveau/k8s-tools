@@ -1,6 +1,6 @@
 # Kubernetes Tools
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/matteojoliveau/k8s-tools?style=for-the-badge)](https://hub.docker.com/r/matteojoliveau/k8s-tools) [![Docker Stars](https://img.shields.io/docker/stars/matteojoliveau/k8s-tools?style=for-the-badge)](https://hub.docker.com/r/matteojoliveau/k8s-tools)
+[![CircleCI](https://img.shields.io/circleci/build/github/MatteoJoliveau/k8s-tools/master?style=for-the-badge)](https://circleci.com/gh/MatteoJoliveau/workflows/k8s-tools/tree/master) [![Docker Pulls](https://img.shields.io/docker/pulls/matteojoliveau/k8s-tools?style=for-the-badge)](https://hub.docker.com/r/matteojoliveau/k8s-tools) [![Docker Stars](https://img.shields.io/docker/stars/matteojoliveau/k8s-tools?style=for-the-badge)](https://hub.docker.com/r/matteojoliveau/k8s-tools)
 
 Docker images with common Kubernetes tooling, mainly for use in CI/CD pipelines
 
