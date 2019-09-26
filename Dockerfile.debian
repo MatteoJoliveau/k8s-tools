@@ -1,0 +1,45 @@
+# Base system
+FROM debian:stretch as base
+
+RUN apt update
+RUN apt install -y wget
+
+# Download kubectl
+FROM base as download-kubectl
+
+
+ARG KUBECTL_VERSION
+ENV KUBECTL_URL https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+
+RUN wget -O /usr/local/bin/kubectl "${KUBECTL_URL}"
+RUN chmod +x /usr/local/bin/kubectl
+
+RUN kubectl version --client
+
+FROM base as download-kustomize
+
+ARG KUSTOMIZE_VERSION
+ENV KUSTOMIZE_URL https://github.com/kubernetes-sigs/kustomize/releases/download/v${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64
+
+RUN wget -O /usr/local/bin/kustomize "${KUSTOMIZE_URL}"
+RUN chmod +x /usr/local/bin/kustomize
+
+RUN kustomize version
+
+FROM base as download-skaffold
+
+ARG SKAFFOLD_VERSION
+ENV SKAFFOLD_URL https://storage.googleapis.com/skaffold/releases/v${SKAFFOLD_VERSION}/skaffold-linux-amd64
+
+RUN wget -O /usr/local/bin/skaffold "${SKAFFOLD_URL}"
+RUN chmod +x /usr/local/bin/skaffold
+
+RUN skaffold version
+
+FROM debian:stretch
+
+ENV SKAFFOLD_UPDATE_CHECK false
+
+COPY --from=download-kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
+COPY --from=download-kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize
+COPY --from=download-skaffold /usr/local/bin/skaffold /usr/local/bin/skaffold

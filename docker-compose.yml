@@ -1,0 +1,20 @@
+version: '3'
+services:
+  tools-debian:
+    build:
+      context: .
+      dockerfile: Dockerfile.debian
+      args:
+        - KUBECTL_VERSION=1.16.0
+        - KUSTOMIZE_VERSION=3.2.0
+        - SKAFFOLD_VERSION=0.38.0
+    image: matteojoliveau/k8s-tools:1.16.0-stretch
+  tools-alpine:
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
+      args:
+        - KUBECTL_VERSION=1.16.0
+        - KUSTOMIZE_VERSION=3.2.0
+        - SKAFFOLD_VERSION=0.38.0
+    image: matteojoliveau/k8s-tools:1.16.0-alpine
