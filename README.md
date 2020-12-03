@@ -16,11 +16,10 @@ Images without explicit kubectl version are built using the latest stable versio
 
 ## Provided tools versions
 
-- [Kustomize 3.2.0](https://kustomize.io)
-- [Skaffold 0.38.0](https://skaffold.dev)
+- [Kustomize 3.8.7](https://kustomize.io)
 
 ## Usage
 
 ```bash
-docker pull matteojoliveau/k8s-tools:${TAG}
+docker pull quay.io/matteojoliveau/k8s-tools:${TAG}
 ```
