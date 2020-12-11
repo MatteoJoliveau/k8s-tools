@@ -1,12 +1,11 @@
 # Base system
-FROM debian:stretch as base
+FROM debian:buster as base
 
-RUN apt update
+RUN apt update && apt upgrade
 RUN apt install -y wget
 
 # Download kubectl
 FROM base as download-kubectl
-
 
 ARG KUBECTL_VERSION
 ENV KUBECTL_URL https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
@@ -26,7 +25,7 @@ RUN chmod +x /usr/local/bin/kustomize
 
 RUN kustomize version
 
-FROM debian:stretch
+FROM debian:buster
 
 COPY --from=download-kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=download-kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize

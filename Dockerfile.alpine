@@ -1,5 +1,5 @@
 # Base system
-FROM alpine:3.10 as base
+FROM alpine:3.12 as base
 
 # Download kubectl
 FROM base as download-kubectl
@@ -23,7 +23,7 @@ RUN chmod +x /usr/local/bin/kustomize
 
 RUN kustomize version
 
-FROM alpine:3.10
+FROM alpine:3.12
 
 COPY --from=download-kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=download-kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize
