@@ -16,10 +16,10 @@ RUN kubectl version --client
 FROM base as download-kustomize
 
 ARG KUSTOMIZE_VERSION
-ENV KUSTOMIZE_URL https://github.com/kubernetes-sigs/kustomize/releases/download/v${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64
+ENV KUSTOMIZE_URL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz
 
-RUN wget -O /usr/local/bin/kustomize "${KUSTOMIZE_URL}"
-RUN chmod +x /usr/local/bin/kustomize
+RUN wget -O ./kustomize.tar.gz "${KUSTOMIZE_URL}"
+RUN tar -xvf kustomize.tar.gz && cp kustomize /usr/local/bin/kustomize && chmod +x /usr/local/bin/kustomize
 
 RUN kustomize version
 
@@ -29,4 +29,4 @@ COPY --from=download-kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=download-kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize
 
 RUN apk update && apk upgrade
-RUN apk add git
+RUN apk add git openssh curl
