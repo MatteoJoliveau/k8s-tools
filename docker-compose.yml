@@ -5,14 +5,14 @@ services:
       context: .
       dockerfile: Dockerfile.debian
       args:
-        - KUBECTL_VERSION=1.19.4
-        - KUSTOMIZE_VERSION=3.8.7
-    image: quay.io/matteojoliveau/k8s-tools:1.19.4-stretch
+        - KUBECTL_VERSION=1.20.2
+        - KUSTOMIZE_VERSION=3.10.0
+    image: quay.io/matteojoliveau/k8s-tools:1.20.2-stretch
   tools-alpine:
     build:
       context: .
       dockerfile: Dockerfile.alpine
       args:
-        - KUBECTL_VERSION=1.19.4
-        - KUSTOMIZE_VERSION=3.8.7
-    image: quay.io/matteojoliveau/k8s-tools:1.19.4-alpine
+        - KUBECTL_VERSION=1.20.2
+        - KUSTOMIZE_VERSION=3.10.0
+    image: quay.io/matteojoliveau/k8s-tools:1.20.2-alpine

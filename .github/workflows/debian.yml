@@ -15,8 +15,8 @@ jobs:
           echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin quay.io
       - name: Build the Docker image
         env:
-          KUBECTL_VERSION: 1.19.4
-          KUSTOMIZE_VERSION: 3.9.0
+          KUBECTL_VERSION: 1.20.2
+          KUSTOMIZE_VERSION: 3.10.0
         run: |
           docker build \
             --file Dockerfile.debian \
