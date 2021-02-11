@@ -1,8 +1,8 @@
 # Base system
 FROM debian:buster as base
 
-RUN apt update && apt upgrade
-RUN apt install -y wget
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install -y wget
 
 # Download kubectl
 FROM base as download-kubectl
@@ -30,5 +30,5 @@ FROM debian:buster
 COPY --from=download-kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=download-kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize
 
-RUN apt update && apt upgrade
-RUN apt install git openssh-client curl -y
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install git openssh-client curl -y
