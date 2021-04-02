@@ -20,7 +20,7 @@ jobs:
           CROSSPLANE_VERSION: 1.1.0
         run: |
           docker build \
-            --file Dockerfile.alpine \
+            --file| Dockerfile.alpine \
             --tag quay.io/matteojoliveau/k8s-tools:$KUBECTL_VERSION-alpine \
             --tag quay.io/matteojoliveau/k8s-tools:alpine \
             --tag quay.io/matteojoliveau/k8s-tools:latest \
