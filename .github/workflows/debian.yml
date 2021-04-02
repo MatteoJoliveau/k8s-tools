@@ -15,8 +15,9 @@ jobs:
           echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin quay.io
       - name: Build the Docker image
         env:
-          KUBECTL_VERSION: 1.20.2
+          KUBECTL_VERSION: 1.20.5
           KUSTOMIZE_VERSION: 3.10.0
+          CROSSPLANE_VERSION: 1.1.0
         run: |
           docker build \
             --file Dockerfile.debian \
@@ -25,5 +26,6 @@ jobs:
             --tag quay.io/matteojoliveau/k8s-tools:latest \
             --build-arg KUBECTL_VERSION=$KUBECTL_VERSION \
             --build-arg KUSTOMIZE_VERSION=$KUSTOMIZE_VERSION \
+            --build-arg CROSSPLANE_VERSION=$CROSSPLANE_VERSION \
             .
           docker push quay.io/matteojoliveau/k8s-tools:$KUBECTL_VERSION-debian

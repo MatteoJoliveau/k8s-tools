@@ -2,7 +2,8 @@
 FROM debian:buster as base
 
 RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y wget
+RUN apt-get install -y wget git openssh-client curl
+
 
 # Download kubectl
 FROM base as download-kubectl
@@ -15,6 +16,7 @@ RUN chmod +x /usr/local/bin/kubectl
 
 RUN kubectl version --client
 
+# Download kustomize
 FROM base as download-kustomize
 
 ARG KUSTOMIZE_VERSION
@@ -25,10 +27,19 @@ RUN tar -xvf kustomize.tar.gz && cp kustomize /usr/local/bin/kustomize && chmod 
 
 RUN kustomize version
 
-FROM debian:buster
+# Download crossplane
+FROM base as download-crossplane
+
+ARG CROSSPLANE_VERSION
+ENV CROSSPLANE_URL https://releases.crossplane.io/stable/v${CROSSPLANE_VERSION}/bin/linux_amd64/crank
+
+RUN wget -O ./kubectl-crossplane "${CROSSPLANE_URL}"
+RUN cp kubectl-crossplane /usr/local/bin/kubectl-crossplane && chmod +x /usr/local/bin/kubectl-crossplane
+
+RUN kubectl-crossplane --version
+
+FROM base
 
 COPY --from=download-kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=download-kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize
-
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install git openssh-client curl -y
+COPY --from=download-crossplane /usr/local/bin/kubectl-crossplane /usr/local/bin/kubectl-crossplane

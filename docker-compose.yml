@@ -5,14 +5,16 @@ services:
       context: .
       dockerfile: Dockerfile.debian
       args:
-        - KUBECTL_VERSION=1.20.2
+        - KUBECTL_VERSION=1.20.5
         - KUSTOMIZE_VERSION=3.10.0
-    image: quay.io/matteojoliveau/k8s-tools:1.20.2-stretch
+        - CROSSPLANE_VERSION=1.1.0
+    image: quay.io/matteojoliveau/k8s-tools:1.20.2-buster
   tools-alpine:
     build:
       context: .
       dockerfile: Dockerfile.alpine
       args:
-        - KUBECTL_VERSION=1.20.2
+        - KUBECTL_VERSION=1.20.5
         - KUSTOMIZE_VERSION=3.10.0
+        - CROSSPLANE_VERSION=1.1.0
     image: quay.io/matteojoliveau/k8s-tools:1.20.2-alpine
