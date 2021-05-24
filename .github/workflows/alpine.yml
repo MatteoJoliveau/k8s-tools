@@ -30,6 +30,6 @@ jobs:
             --build-arg KUSTOMIZE_VERSION=$KUSTOMIZE_VERSION \
             --build-arg CROSSPLANE_VERSION=$CROSSPLANE_VERSION \
             --build-arg HELM_VERSION=$HELM_VERSION \
-            --build-arg YQ_VERSION=YQ_VERSION \
+            --build-arg YQ_VERSION=$YQ_VERSION \
             .
           docker push quay.io/matteojoliveau/k8s-tools:$KUBECTL_VERSION-alpine
