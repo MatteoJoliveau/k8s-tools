@@ -15,9 +15,11 @@ jobs:
           echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin quay.io
       - name: Build the Docker image
         env:
-          KUBECTL_VERSION: 1.20.5
-          KUSTOMIZE_VERSION: 3.10.0
-          CROSSPLANE_VERSION: 1.1.0
+          KUBECTL_VERSION: 1.21.1
+          KUSTOMIZE_VERSION: 4.1.3
+          CROSSPLANE_VERSION: 1.2.1
+          HELM_VERSION: 3.5.4
+          YQ_VERSION: 4.9.3
         run: |
           docker build \
             --file Dockerfile.alpine \
@@ -27,5 +29,7 @@ jobs:
             --build-arg KUBECTL_VERSION=$KUBECTL_VERSION \
             --build-arg KUSTOMIZE_VERSION=$KUSTOMIZE_VERSION \
             --build-arg CROSSPLANE_VERSION=$CROSSPLANE_VERSION \
+            --build-arg HELM_VERSION=$HELM_VERSION \
+            --build-arg YQ_VERSION=YQ_VERSION \
             .
           docker push quay.io/matteojoliveau/k8s-tools:$KUBECTL_VERSION-alpine
