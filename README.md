@@ -17,9 +17,9 @@ Images without explicit kubectl version are built using the latest stable versio
 ## Provided tools
 
 - [Kustomize 4](https://kustomize.io)
-- [Crossplane 1.2](https://crossplane.io)
-- [Helm 3](https://helm.sh)
-- [YQ 4](https://https://github.com/mikefarah/yq)
+- [Crossplane 1.2](https://crossplane.io) (since 1.20.5)
+- [Helm 3](https://helm.sh) (since 1.21.1)
+- [YQ 4](https://https://github.com/mikefarah/yq) (since 1.21.1)
 
 ## Usage
 
