@@ -3,7 +3,7 @@ FROM debian:buster as base
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y wget git openssh-client curl
-
+COPY download-tool.sh /usr/local/bin
 
 # Download kubectl
 FROM base as download-kubectl
@@ -11,9 +11,7 @@ FROM base as download-kubectl
 ARG KUBECTL_VERSION
 ENV KUBECTL_URL https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 
-RUN wget -O /usr/local/bin/kubectl "${KUBECTL_URL}"
-RUN chmod +x /usr/local/bin/kubectl
-
+RUN download-tool.sh "kubectl" "$KUBECTL_URL"
 RUN kubectl version --client
 
 # Download kustomize
@@ -22,9 +20,7 @@ FROM base as download-kustomize
 ARG KUSTOMIZE_VERSION
 ENV KUSTOMIZE_URL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz
 
-RUN wget -O ./kustomize.tar.gz "${KUSTOMIZE_URL}"
-RUN tar -xvf kustomize.tar.gz && cp kustomize /usr/local/bin/kustomize && chmod +x /usr/local/bin/kustomize
-
+RUN download-tool.sh "kustomize" "$KUSTOMIZE_URL" "tar"
 RUN kustomize version
 
 # Download crossplane
@@ -33,13 +29,31 @@ FROM base as download-crossplane
 ARG CROSSPLANE_VERSION
 ENV CROSSPLANE_URL https://releases.crossplane.io/stable/v${CROSSPLANE_VERSION}/bin/linux_amd64/crank
 
-RUN wget -O ./kubectl-crossplane "${CROSSPLANE_URL}"
-RUN cp kubectl-crossplane /usr/local/bin/kubectl-crossplane && chmod +x /usr/local/bin/kubectl-crossplane
-
+RUN download-tool.sh "kubectl-crossplane" "$CROSSPLANE_URL"
 RUN kubectl-crossplane --version
+
+# Download helm
+FROM base as download-helm
+
+ARG HELM_VERSION
+ENV HELM_URL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
+
+RUN download-tool.sh "helm" "$HELM_URL" "tar" "linux-amd64/helm"
+RUN helm version
+
+# Download yq
+FROM base as download-yq
+
+ARG YQ_VERSION
+ENV YQ_URL https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64
+
+RUN download-tool.sh "yq" "$YQ_URL"
+RUN yq --version
 
 FROM base
 
 COPY --from=download-kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=download-kustomize /usr/local/bin/kustomize /usr/local/bin/kustomize
 COPY --from=download-crossplane /usr/local/bin/kubectl-crossplane /usr/local/bin/kubectl-crossplane
+COPY --from=download-helm /usr/local/bin/helm /usr/local/bin/helm
+COPY --from=download-yq /usr/local/bin/yq /usr/local/bin/yq

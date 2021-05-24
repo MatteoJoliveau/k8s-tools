@@ -8,6 +8,8 @@ services:
         - KUBECTL_VERSION=1.20.5
         - KUSTOMIZE_VERSION=3.10.0
         - CROSSPLANE_VERSION=1.1.0
+        - HELM_VERSION=3.5.4
+        - YQ_VERSION=4.9.3
     image: quay.io/matteojoliveau/k8s-tools:1.20.5-buster
   tools-alpine:
     build:
@@ -17,4 +19,6 @@ services:
         - KUBECTL_VERSION=1.20.5
         - KUSTOMIZE_VERSION=3.10.0
         - CROSSPLANE_VERSION=1.1.0
+        - HELM_VERSION=3.5.4
+        - YQ_VERSION=4.9.3
     image: quay.io/matteojoliveau/k8s-tools:1.20.5-alpine
